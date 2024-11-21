@@ -42,7 +42,15 @@ namespace ConsoleApp1.Services
         }
 
         public static bool canMakeReservation(ApplicationDbContext context, User user, Posting posting, Seat seat)
-        { 
+        {
+            int filmDuration = context.Films.Join(context.Postings,
+                f => f.filmID,
+                p => p.filmID,
+                (f, p) => new
+                {
+                    filmDuration = f.slotCount,
+                    PostingID = p.postingID
+                }).Where(x => x.PostingID == posting.postingID).Select(x=>x.filmDuration).FirstOrDefault(); 
             bool reservationCheck = context.Postings.Join(
                context.Reservations,
                p => p.postingID,
@@ -68,9 +76,9 @@ namespace ConsoleApp1.Services
                    Postingid           = pr.PostingID
                }
                ).Where(x =>
-               ((x.ReservingUserID == user.userID) && ((x.PremierDate < posting.operationDate && posting.operationDate < x.PremierDate.AddHours(x.filmDuration) && x.PremierDate.AddHours(x.filmDuration) < posting.operationDate.AddHours(posting.film.slotCount))
-               || (posting.operationDate < x.PremierDate && posting.operationDate < x.PremierDate.AddHours(x.filmDuration) && posting.operationDate.AddHours(posting.film.slotCount) < x.PremierDate.AddHours(x.filmDuration))
-               || (x.PremierDate < posting.operationDate && posting.operationDate.AddHours(posting.film.slotCount) < x.PremierDate.AddHours(x.filmDuration)))
+               ((x.ReservingUserID == user.userID) && ((x.PremierDate < posting.operationDate && posting.operationDate < x.PremierDate.AddHours(x.filmDuration) && x.PremierDate.AddHours(x.filmDuration) < posting.operationDate.AddHours(filmDuration))
+               || (posting.operationDate < x.PremierDate && posting.operationDate < x.PremierDate.AddHours(x.filmDuration) && posting.operationDate.AddHours(filmDuration) < x.PremierDate.AddHours(x.filmDuration))
+               || (x.PremierDate < posting.operationDate && posting.operationDate.AddHours(filmDuration) < x.PremierDate.AddHours(x.filmDuration)))
                ) || (x.Postingid == posting.postingID && x.Seatid == seat.seatID && x.IsReservationActive == true)).Any();
             return !reservationCheck;
         }

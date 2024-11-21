@@ -155,6 +155,11 @@ namespace ConsoleApp1.Services
             {
                 PostingService.addPosting(context, user, film, cinema, hall, premierTime, registrationFee);
                 OperationService.addOperation(context, user.userID, "MakingPosting");
+                Console.WriteLine("Posting made successfully!");
+            }
+            else
+            {
+                Console.WriteLine("A slot clash detected. Please re-adjust the screening time!");
             }
         }
         public static void makeReservation(ApplicationDbContext context, User user, int postingID,int seatID)
@@ -167,13 +172,14 @@ namespace ConsoleApp1.Services
             }
             if (ReservationService.canMakeReservation(context, user, posting,seat))
             {
-                if (user.deposit < posting.operationFee)
+                if (user.deposit > posting.operationFee)
                 {
                     ReservationService.addReservation(context, user, posting, seat);
                     context.Users.Attach(user);
                     user.deposit = user.deposit - posting.operationFee;
                     context.SaveChanges();
                     OperationService.addOperation(context, user.userID, "MakingReservation");
+                    Console.WriteLine("Reservation was made successfully!");
                 }
                 else
                 {
@@ -182,14 +188,16 @@ namespace ConsoleApp1.Services
             }
             else
             {
-                Console.WriteLine("Please check your input!");
+                Console.WriteLine("A slot clash detected. You can't make this reservation given your current reservations!");
             }
         }
         public static void listCurrentReservations(ApplicationDbContext context, User user) { 
             List<Reservation> reservations = ReservationService.getUserReservations(context, user);
             foreach (Reservation reservation in reservations)
             {
-                Console.WriteLine(reservation.toString());
+                Posting posting = PostingService.getPosting(context,reservation.postingID)  ;
+                Cinema  cinema  = CinemaService.getCinema(context,posting.cinemaID)  ;
+                Console.WriteLine(reservation.toString(posting,cinema));
             }
             OperationService.addOperation(context, user.userID, "ListingPersonalReservations");
         }

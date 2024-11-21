@@ -205,7 +205,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "2")
                     {
-                        double numericalDepositInput = VerificationService.getPositiveDoubleInput();
+                        double numericalDepositInput = VerificationService.getPositiveDoubleInput("Enter the amount to be deposited:");
                         if (numericalDepositInput < 0) {
                             Console.WriteLine("Please insert a positive number!");
                         }
@@ -220,8 +220,8 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "4")
                     {
-                        int numericalPostingID = VerificationService.getPositiveIntegerInput();
-                        int numericalSeatID    = VerificationService.getPositiveIntegerInput();
+                        int numericalPostingID = VerificationService.getPositiveIntegerInput("Enter the posting's ID:");
+                        int numericalSeatID    = VerificationService.getPositiveIntegerInput("Enter the seat's ID:");
                         if (numericalPostingID < 0 || numericalSeatID < 0)
                         {
                             Console.WriteLine("Please insert a positive integer!");
@@ -233,7 +233,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "5")
                     {
-                        int numericalReservationID = VerificationService.getPositiveIntegerInput();
+                        int numericalReservationID = VerificationService.getPositiveIntegerInput("Enter the reservation's ID:");
                         if (numericalReservationID < 0)
                         {
                             Console.WriteLine("Please insert a positive integer!");
@@ -293,7 +293,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "2")
                     {
-                        double numericalDepositInput = VerificationService.getPositiveDoubleInput();
+                        double numericalDepositInput = VerificationService.getPositiveDoubleInput("Enter the amount to be deposited:");
                         if (numericalDepositInput < 0)
                         {
                             Console.WriteLine("Please insert a positive number!");
@@ -309,8 +309,8 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "4")
                     {
-                        int numericalPostingID = VerificationService.getPositiveIntegerInput();
-                        int numericalSeatID = VerificationService.getPositiveIntegerInput();
+                        int numericalPostingID = VerificationService.getPositiveIntegerInput("Enter the posting's ID:");
+                        int numericalSeatID    = VerificationService.getPositiveIntegerInput("Enter the seat's ID:");
                         if (numericalPostingID < 0 || numericalSeatID < 0)
                         {
                             Console.WriteLine("Please insert a positive integer!");
@@ -322,7 +322,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "5")
                     {
-                        int numericalReservationID = VerificationService.getPositiveIntegerInput();
+                        int numericalReservationID = VerificationService.getPositiveIntegerInput("Enter the reservation's ID:");
                         if (numericalReservationID < 0)
                         {
                             Console.WriteLine("Please insert a positive integer!");
@@ -344,18 +344,17 @@ namespace ConsoleApp1.Helpers
                     {
                         Console.WriteLine("Insert the cinema's name:");
                         string cinemaName = Console.ReadLine();
-                        Console.WriteLine("Insert the hall count:");
-                        int hallCount = VerificationService.getPositiveIntegerInput();
+                        int hallCount = VerificationService.getPositiveIntegerInput("Enter the hall count:");
                         if (hallCount < 1) {
                             Console.WriteLine("Please insert a valid integer");
                             break;
                         }
                         List<int> hallCapacities = new List<int>();
-                        Console.WriteLine("Please insert each hall capacities!");
+                        Console.WriteLine("Please insert each hall's capacity:");
                         bool checkCapacityConsistency = true;
                         for (int hallCounter = 0; hallCounter < hallCount; hallCounter++)
                         {
-                            int hallcapacity = VerificationService.getPositiveIntegerInput();
+                            int hallcapacity = VerificationService.getPositiveIntegerInput($"Hall No.{hallCounter + 1}:");
                             if (hallcapacity <1)
                             {
                                 Console.WriteLine("Please insert a valid integer");
@@ -393,24 +392,20 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "10")
                     {
-                        Console.WriteLine("Insert the film's ID:");
-                        int filmID            = VerificationService.getPositiveIntegerInput();
+                        int filmID            = VerificationService.getPositiveIntegerInput("Enter the film's ID:");
                         if (filmID >= 0)
                         {
-                            Console.WriteLine("Insert the cinema's ID:");
-                            int cinemaID = VerificationService.getPositiveIntegerInput();
+                            int cinemaID = VerificationService.getPositiveIntegerInput("Enter the cinema's ID:");
                             if (cinemaID >= 0)
                             {
-                                Console.WriteLine("Insert the hall's ID:");
-                                int hallID = VerificationService.getPositiveIntegerInput();
+                                int hallID = VerificationService.getPositiveIntegerInput("Enter the hall's ID:");
                                 if (hallID >= 0)
                                 {
                                     Console.WriteLine("Insert the premier time:");
                                     DateTime premierTime = VerificationService.readPremierDate();
                                     if (premierTime > DateTime.MinValue)
                                     {
-                                        Console.WriteLine("Insert the registration fee:");
-                                        double reservationFee = VerificationService.getPositiveDoubleInput();
+                                        double reservationFee = VerificationService.getPositiveDoubleInput("Enter the registration's fee:");
                                         if (reservationFee >= 0)
                                         {
                                             UserService.makePosting(context, loggedinUser, filmID, cinemaID, hallID, premierTime, reservationFee);
@@ -442,7 +437,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "11")
                     {
-                        int cinemaID = VerificationService.getPositiveIntegerInput();
+                        int cinemaID = VerificationService.getPositiveIntegerInput("Enter the cinema's ID:");
                         if (cinemaID < 0)
                         {
                             Console.WriteLine("Please insert a integer");
@@ -454,7 +449,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "12")
                     {
-                        int filmID = VerificationService.getPositiveIntegerInput();
+                        int filmID = VerificationService.getPositiveIntegerInput("Enter the film's ID:");
                         if (filmID < 0)
                         {
                             Console.WriteLine("Please insert a integer");
@@ -466,7 +461,7 @@ namespace ConsoleApp1.Helpers
                     }
                     else if (option == "13")
                     {
-                        int postingID = VerificationService.getPositiveIntegerInput();
+                        int postingID = VerificationService.getPositiveIntegerInput("Enter the post's ID:");
                         if (postingID < 0)
                         {
                             Console.WriteLine("Please insert a integer");

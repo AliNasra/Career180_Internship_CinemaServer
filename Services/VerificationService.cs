@@ -90,9 +90,9 @@ namespace ConsoleApp1
                 return DateTime.MinValue;
             }        
         }
-        public static int getPositiveIntegerInput()
+        public static int getPositiveIntegerInput(string promptMessage = "Please insert a positive integer")
         {
-            Console.WriteLine("Please insert an integer");
+            Console.WriteLine(promptMessage);
             string stringInput = Console.ReadLine();
             try
             {
@@ -111,9 +111,9 @@ namespace ConsoleApp1
             }
         }
 
-        public static double getPositiveDoubleInput()
+        public static double getPositiveDoubleInput(string promptMessage = "Please insert a positive decimal number")
         {
-            Console.WriteLine("Please insert an integer");
+            Console.WriteLine(promptMessage);
             string stringInput = Console.ReadLine();
             try
             {

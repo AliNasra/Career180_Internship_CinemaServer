@@ -18,9 +18,9 @@ namespace ConsoleApp1.Models
         public Seat       seat             { get; set; }
         public DateTime   reservationDate  { get; set; }
 
-        public string toString()
+        public string toString(Posting posting,Cinema cinema)
         {
-            return $"Reservation of ID {this.reservationID} in {this.posting.cinema.cinemaName} cinema in {this.posting.operationDate:dddd, MMMM d, yyyy h:mm tt} with a fee of {this.posting.operationFee}";
+            return $"Reservation of ID {this.reservationID} in {cinema.cinemaName} cinema in {posting.operationDate:dddd, MMMM d, yyyy h:mm tt} with a fee of {posting.operationFee}";
         }
         public int CompareTo(Reservation other)
         {
